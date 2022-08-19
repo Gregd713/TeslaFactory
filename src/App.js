@@ -19,6 +19,15 @@ const material = new THREE.MeshBasicMaterial({color:0x00ff00, wireframe: true});
 const box = new THREE.Mesh(boxGeometry,material);
 scene.add(box);
 
+function animate(){
+  requestAnimationFrame(animate);
+  renderer.render(scene,camera);
+  box.rotation.x += .01
+  box.rotation.y += .01
+}
+
+animate()
+
 renderer.render(scene,camera);
   return (
 null
