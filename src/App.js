@@ -1,36 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
-import * as THREE from 'three';
+import {Canvas, useFrame} from 'react-three-fiber';
+import {useRef} from 'react';
 
-function App() {
-  const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,0.1,1000);
-
-const renderer = new THREE.WebGLRenderer();
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(5);
-document.body.innerHTML='';
-document.body.appendChild(renderer.domElement);
-
-const boxGeometry = new THREE.BoxGeometry(1,1,1)
-const material = new THREE.MeshBasicMaterial({color:0x00ff00, wireframe: true});
-const box = new THREE.Mesh(boxGeometry,material);
-scene.add(box);
-
-function animate(){
-  requestAnimationFrame(animate);
-  renderer.render(scene,camera);
-  box.rotation.x += .01
-  box.rotation.y += .01
+const Box = ()=>{
+  const ref = useRef();
+  useFrame(state=>{
+    ref.current.rotation.x +=0.01;
+    ref.current.rotation.y +=0.01;
+  })
+  return(
+    <mesh ref ={ref}>
+    <boxBufferGeometry/>
+    <meshBasicMaterial color='blue'/>
+  </mesh>
+  )
 }
 
-animate()
+function App() {
 
-renderer.render(scene,camera);
   return (
-null
+  <div style ={{height:'100vh', width:'100vw'}}>
+    <Canvas style={{background: 'black'}}>
+    <Box/>
+    </Canvas>
+    </div>
   );
 }
 
