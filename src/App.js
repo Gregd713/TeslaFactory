@@ -12,14 +12,14 @@ const Orbit=()=>{
 }
 
 
-const Box = ()=>{
+const Box = props =>{
   const ref = useRef();
   useFrame(state=>{
     ref.current.rotation.x +=0.01;
     ref.current.rotation.y +=0.01;
   })
   return(
-    <mesh ref ={ref}>
+    <mesh ref ={ref}{...props}>
     <boxBufferGeometry/>
     <meshBasicMaterial color='blue'/>
   </mesh>
@@ -32,8 +32,13 @@ function App() {
   <div style ={{height:'100vh', width:'100vw'}}>
     <Canvas style={{background: 'black'}} camera ={{position:[3,3,3]}}>
       <Orbit/>
-    {/* <Box/> */}
+    <Box position={[1,1,0]}/>
     <axesHelper args={[5]}/>
+    <points>
+      {/* <geometry>
+        <vector3 attachArray = 'vertices'/>
+      </geometry> */}
+    </points>
     </Canvas>
     </div>
   );
