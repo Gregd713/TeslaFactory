@@ -1,6 +1,6 @@
 import './App.css';
-import {Canvas, useFrame, useThree, extend} from 'react-three-fiber';
-import {useRef} from 'react';
+import {Canvas, useFrame, useThree, extend,useLoader} from 'react-three-fiber';
+import {Suspense, useRef} from 'react';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import { isClickableInput } from '@testing-library/user-event/dist/utils';
 import * as THREE from 'three';
@@ -17,25 +17,40 @@ const Orbit=()=>{
 
 const Box = props =>{
   const ref = useRef();
+  const texture=useLoader(THREE.TextureLoader,'/squares.jpg');
   useFrame(state=>{
-    // ref.current.rotation.x +=0.01;
+    ref.current.rotation.x +=0.01;
     ref.current.rotation.y +=0.01;
   })
   return(
     <mesh ref ={ref}{...props} receiveShadow castShadow>
     <boxBufferGeometry/>
     <meshPhysicalMaterial 
-    color='white'
-
-    transparent
+    map={texture}
+    // color='white'
+    // transparent
     // metalness={1}
-    roughness={0}
-    clearcoat={1}
-    transmission={1}
-    reflectivity={1}
-    side={THREE.DoubleSide}
+    // roughness={0}
+    // clearcoat={1}
+    // transmission={1}
+    // reflectivity={1}
+    // side={THREE.DoubleSide}
     />
   </mesh>
+  )
+}
+
+const Background=props=>{
+  const texture=useLoader(THREE.TextureLoader,'autoshop.jpg');
+
+  const {gl}=useThree();
+
+const formatted= new THREE.WebGLCubeRenderTarget(
+  texture.image.height
+  ).fromEquirectangularTexture(gl, texture)
+
+  return(
+    <primitive attach= 'background' object={formatted.texture}/>
   )
 }
 
@@ -64,12 +79,15 @@ function App() {
 
   return (
   <div style ={{height:'100vh', width:'100vw'}}>
-    <Canvas shadows colorManagement style={{background: 'black'}} camera ={{position:[1,5,1]}}>
+    <Canvas shadows  style={{background: 'black'}} camera ={{position:[3,3,3]}}>
      <Orbit/>
+     <Suspense fallback={null}>
      {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
      <ambientLight intensity={0.2}/>
     <Box position={[0,1,0]} />
+    <Background/>
+    </Suspense>
     <axesHelper args={[5]}/>
     <Floor position = {[0,-0.5,0]} />
     </Canvas>
