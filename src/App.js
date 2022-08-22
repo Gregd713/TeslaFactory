@@ -18,12 +18,38 @@ const Orbit=()=>{
 const Box = props =>{
   const ref = useRef();
   const texture=useLoader(THREE.TextureLoader,'/squares.jpg');
+  const handlePointerDown= e =>{
+    console.log(e)
+    e.object.active=true;
+    if(window.activeMesh)
+    window.activeMesh=e.object
+  }
+  const handlePointerEnter=e=>{
+    e.object.scale.x=1.5
+    e.object.scale.y=1.5
+    e.object.scale.z=1.5
+  }
+
+  const handlePointerLeave=e=>{
+    if(!e.object.active){
+      e.object.scale.x=1
+      e.object.scale.y=1
+      e.object.scale.z=1
+    }
+
+  }
   useFrame(state=>{
     ref.current.rotation.x +=0.01;
     ref.current.rotation.y +=0.01;
   })
   return(
-    <mesh ref ={ref}{...props} receiveShadow castShadow>
+    <mesh ref ={ref}{...props} 
+    receiveShadow 
+    castShadow
+    onPointerDown={handlePointerDown}
+    onPointerEnter={handlePointerEnter}
+    onPointerLeave={handlePointerLeave}
+    >
     <boxBufferGeometry/>
     <meshPhysicalMaterial 
     map={texture}
@@ -79,13 +105,14 @@ function App() {
 
   return (
   <div style ={{height:'100vh', width:'100vw'}}>
-    <Canvas shadows  style={{background: 'black'}} camera ={{position:[3,3,3]}}>
+    <Canvas shadows  style={{background: 'black'}} camera ={{position:[7,7,7]}}>
      <Orbit/>
      <Suspense fallback={null}>
      {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
      <ambientLight intensity={0.2}/>
-    <Box position={[0,1,0]} />
+    <Box position={[4,1,0]} />
+    <Box position={[-4,1,0]} />
     <Background/>
     </Suspense>
     <axesHelper args={[5]}/>
