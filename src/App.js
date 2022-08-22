@@ -4,7 +4,7 @@ import {useRef} from 'react';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import { isClickableInput } from '@testing-library/user-event/dist/utils';
 import * as THREE from 'three';
-import { Scene } from 'three';
+import { PointLight, Scene } from 'three';
 extend({OrbitControls});
 
 const Orbit=()=>{
@@ -18,13 +18,23 @@ const Orbit=()=>{
 const Box = props =>{
   const ref = useRef();
   useFrame(state=>{
-    ref.current.rotation.x +=0.01;
+    // ref.current.rotation.x +=0.01;
     ref.current.rotation.y +=0.01;
   })
   return(
-    <mesh ref ={ref}{...props}>
+    <mesh ref ={ref}{...props} receiveShadow castShadow>
     <boxBufferGeometry/>
-    <meshPhysicalMaterial color='blue'/>
+    <meshPhysicalMaterial 
+    color='white'
+
+    transparent
+    // metalness={1}
+    roughness={0}
+    clearcoat={1}
+    transmission={1}
+    reflectivity={1}
+    side={THREE.DoubleSide}
+    />
   </mesh>
   )
 }
@@ -32,26 +42,36 @@ const Box = props =>{
 
 const Floor =props =>{
   return(
-    <mesh  {...props}>
+    <mesh  {...props}receiveShadow castShadow>
       <boxBufferGeometry     args={[
-      10,1,10
+      20,1,10
     ]}/>
       <meshPhysicalMaterial/>
     </mesh>
   )
 }
-
+const Bulb=props=>{
+  return(
+    <mesh{...props} receiveShadow castShadow>
+      <pointLight />
+      <sphereBufferGeometry args={[0.2,20,20]}/>
+      <meshPhongMaterial emissive='yellow'/>
+    </mesh>
+  )
+}
 
 function App() {
 
   return (
   <div style ={{height:'100vh', width:'100vw'}}>
-    <Canvas style={{background: 'black'}} camera ={{position:[3,3,3]}}>
+    <Canvas shadows colorManagement style={{background: 'black'}} camera ={{position:[1,5,1]}}>
      <Orbit/>
-     <ambientLight intensity={0.5}/>
-    <Box position={[1,1,0]}/>
+     {/* <fog attach = 'fog' args={['white',1,10]}/> */}
+     <Bulb position={[0,3,0]}/>
+     <ambientLight intensity={0.2}/>
+    <Box position={[0,1,0]} />
     <axesHelper args={[5]}/>
-    <Floor/>
+    <Floor position = {[0,-0.5,0]} />
     </Canvas>
     </div>
   );
