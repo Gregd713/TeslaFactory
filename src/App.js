@@ -2,6 +2,9 @@ import './App.css';
 import {Canvas, useFrame, useThree, extend} from 'react-three-fiber';
 import {useRef} from 'react';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import { isClickableInput } from '@testing-library/user-event/dist/utils';
+import * as THREE from 'three';
+import { Scene } from 'three';
 extend({OrbitControls});
 
 const Orbit=()=>{
@@ -21,24 +24,34 @@ const Box = props =>{
   return(
     <mesh ref ={ref}{...props}>
     <boxBufferGeometry/>
-    <meshBasicMaterial color='blue'/>
+    <meshPhysicalMaterial color='blue'/>
   </mesh>
   )
 }
+
+
+const Floor =props =>{
+  return(
+    <mesh  {...props}>
+      <boxBufferGeometry     args={[
+      10,1,10
+    ]}/>
+      <meshPhysicalMaterial/>
+    </mesh>
+  )
+}
+
 
 function App() {
 
   return (
   <div style ={{height:'100vh', width:'100vw'}}>
     <Canvas style={{background: 'black'}} camera ={{position:[3,3,3]}}>
-      <Orbit/>
+     <Orbit/>
+     <ambientLight intensity={0.5}/>
     <Box position={[1,1,0]}/>
     <axesHelper args={[5]}/>
-    <points>
-      {/* <geometry>
-        <vector3 attachArray = 'vertices'/>
-      </geometry> */}
-    </points>
+    <Floor/>
     </Canvas>
     </div>
   );
