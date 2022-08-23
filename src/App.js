@@ -19,7 +19,7 @@ function App() {
      <Orbit />
      <axesHelper args={[5]}/>
      <Physics>
-     <Dragable>
+     <Dragable transformGroup>
       <Suspense>
         <Model 
         path='/tesla_model_3/scene.gltf'
@@ -27,6 +27,8 @@ function App() {
         position={[4,0.1,0]}
         />
       </Suspense>
+      </Dragable>
+      <Dragable>
       <Suspense>
         <Model 
         path='/tesla_model_s/scene.gltf'
@@ -34,15 +36,15 @@ function App() {
         position={[-4,-.3,0]}
         />
       </Suspense>
+      </Dragable>
      <Suspense fallback={null}>
      {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
      <ambientLight intensity={0.2}/>
-    {/* <Box position={[4,1,0]} />
-    <Box position={[-4,1,0]} /> */}
+    {/* <Box position={[4,1,0]} /> */}
+    {/* <Box position={[-4,1,0]} /> */}
     </Suspense>
-
-    </Dragable>
+   
     <Plane position = {[0,-0.5,0]} />
     </Physics>
     <Suspense>
