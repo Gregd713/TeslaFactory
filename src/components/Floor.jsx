@@ -1,14 +1,15 @@
 
+import { usePlane } from '@react-three/cannon'
 
-const Floor =props =>{
+const Plane =props =>{
+    const [ref,api] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+
     return(
-      <mesh  {...props}receiveShadow castShadow>
-        <boxBufferGeometry     args={[
-        20,1,10
-      ]}/>
-        <meshPhysicalMaterial/>
-      </mesh>
+    <mesh ref={ref} {...props}receiveShadow castShadow>
+      <planeGeometry args={[20,10]} />
+    </mesh>
     )
   }
 
-  export default Floor;
+  export default Plane;
+
