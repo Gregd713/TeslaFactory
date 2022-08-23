@@ -1,9 +1,11 @@
 import {useFrame, useLoader} from 'react-three-fiber';
 import{useRef} from 'react';
 import  * as THREE from'three'
+import { useBox } from '@react-three/cannon'
 
 const Box = props =>{
-    const ref = useRef();
+  const [ref,api] = useBox(() => ({mass:1, ...props }))
+
     const texture=useLoader(THREE.TextureLoader,'/squares.jpg');
     const handlePointerDown= e =>{
   
@@ -32,12 +34,12 @@ const Box = props =>{
       object.scale.z=1
     }
   
-    useFrame(state=>{
-      ref.current.rotation.x +=0.01;
-      ref.current.rotation.y +=0.01;
-    })
+
     return(
-      <mesh ref ={ref}{...props} 
+      <mesh 
+      ref ={ref}
+      api={api}
+      {...props} 
       receiveShadow 
       castShadow
       onPointerDown={handlePointerDown}
@@ -61,3 +63,8 @@ const Box = props =>{
   }
   
   export default Box;
+
+  // useFrame(state=>{
+  //   ref.current.rotation.x +=0.01;
+  //   ref.current.rotation.y +=0.01;
+  // })
