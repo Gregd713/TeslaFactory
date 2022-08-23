@@ -15,7 +15,7 @@ function App() {
   <div style ={{height:'100vh', width:'100vw'}}>
     <ColorPicker/>
     <Canvas shadows  style={{background: 'black'}} camera ={{position:[7,7,7]}}>
-     <Orbit/>
+     <Orbit />
      <axesHelper args={[5]}/>
      <Dragable>
      <Suspense fallback={null}>
