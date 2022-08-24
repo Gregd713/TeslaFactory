@@ -9,7 +9,8 @@ import Bulb from './components/Bulb';
 import ColorPicker from './components/ColorPicker';
 import Dragable from './components/Dragable';
 import {Physics} from '@react-three/cannon';
-import Model from './components/Model'
+import Model from './components/Model';
+import BoundingBox from './components/BoundinBox';
 function App() {
 
   return (
@@ -19,25 +20,39 @@ function App() {
      <Orbit />
      <axesHelper args={[5]}/>
      <Physics>
+      
      <Dragable transformGroup>
+     <BoundingBox 
+     visible 
+     position={[4,.1,0]}
+     dims={[3,2,6]}
+    offset={[0,-.4,0.8]}
+     >
       <Suspense>
         <Model 
         path='/tesla_model_3/scene.gltf'
         scale ={new Array(3).fill(0.01)}
-        position={[4,0.1,0]}
+        // position={[4,0.1,0]}
         />
       </Suspense>
+      </BoundingBox>
       </Dragable>
-      <Dragable>
+      <Dragable transformGroup>
+      <BoundingBox 
+      visible 
+      position={[-4,.1,0]}
+      dims={[3,2,6]}
+      offset={[0,-.8,0.2]}
+      >
       <Suspense>
         <Model 
         path='/tesla_model_s/scene.gltf'
         scale ={new Array(3).fill(0.7)}
-        position={[-4,-.3,0]}
         />
       </Suspense>
+      </BoundingBox>
       </Dragable>
-      <Dragable transformGroup>
+      {/* <Dragable transformGroup>
       <Suspense>
         <Model 
         path='/truck/truck.glb'
@@ -45,7 +60,7 @@ function App() {
         position={[3,.2,-2]}
         />
       </Suspense>
-      </Dragable>
+      </Dragable> */}
      <Suspense fallback={null}>
      {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
