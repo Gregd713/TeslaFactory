@@ -37,9 +37,19 @@ function App() {
         />
       </Suspense>
       </Dragable>
+      <Dragable transformGroup>
+      <Suspense>
+        <Model 
+        path='/truck/truck.glb'
+        scale ={new Array(3).fill(0.7)}
+        position={[3,.2,-2]}
+        />
+      </Suspense>
+      </Dragable>
      <Suspense fallback={null}>
      {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
+     <Bulb position={[2,3,2]}/>
      <ambientLight intensity={0.2}/>
     {/* <Box position={[4,1,0]} /> */}
     {/* <Box position={[-4,1,0]} /> */}
