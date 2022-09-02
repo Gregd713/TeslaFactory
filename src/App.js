@@ -23,8 +23,7 @@ function App() {
       
      <Dragable transformGroup>
      <BoundingBox 
-     visible 
-     position={[4,.1,0]}
+     position={[4,4,0]}
      dims={[3,2,6]}
     offset={[0,-.4,0.8]}
      >
@@ -32,15 +31,13 @@ function App() {
         <Model 
         path='/tesla_model_3/scene.gltf'
         scale ={new Array(3).fill(0.01)}
-        // position={[4,0.1,0]}
         />
       </Suspense>
       </BoundingBox>
       </Dragable>
       <Dragable transformGroup>
       <BoundingBox 
-      visible 
-      position={[-4,.1,0]}
+      position={[-4,4,0]}
       dims={[3,2,6]}
       offset={[0,-.8,0.2]}
       >
@@ -52,22 +49,10 @@ function App() {
       </Suspense>
       </BoundingBox>
       </Dragable>
-      {/* <Dragable transformGroup>
-      <Suspense>
-        <Model 
-        path='/truck/truck.glb'
-        scale ={new Array(3).fill(0.7)}
-        position={[3,.2,-2]}
-        />
-      </Suspense>
-      </Dragable> */}
      <Suspense fallback={null}>
-     {/* <fog attach = 'fog' args={['white',1,10]}/> */}
      <Bulb position={[0,3,0]}/>
-     <Bulb position={[2,3,2]}/>
+
      <ambientLight intensity={0.2}/>
-    {/* <Box position={[4,1,0]} /> */}
-    {/* <Box position={[-4,1,0]} /> */}
     </Suspense>
    
     <Plane position = {[0,-0.5,0]} />
