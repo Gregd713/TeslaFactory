@@ -9,12 +9,14 @@ import ColorPicker from './components/ColorPicker';
 import {Physics} from '@react-three/cannon';
 import Cars from './components/Cars';
 import CameraControls from './components/CameraControls';
+import CameraButtons from './components/CameraButtons';
 
 function App() {
 
   return (
   <div style ={{height:'100vh', width:'100vw'}}>
     <ColorPicker/>
+    <CameraButtons/>
     <Canvas shadows  style={{background: 'black'}} camera ={{position:[7,7,7]}}>
      <Orbit />
      <axesHelper args={[5]}/>
